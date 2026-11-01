@@ -34,7 +34,32 @@ Each Task belongs to exactly one Column.
 - Column and task ordering must persist.
 - Only the board owner may modify its contents.
 
-## 4. Modeling Status
+
+## 4. Logical Data Model (Draft)
+
+### 4.1 Board
+
+| Attribute | Role | Description |
+|---|---|---|
+| id | PK | Unique board identifier |
+| name | Required | Board name |
+| ownerId | FK | References User |
+| status | Required | Active or Archived |
+
+### Relationship
+
+- Each Board must reference exactly one User.
+- One User may own multiple Boards.
+
+### Constraints
+
+- Board name cannot be empty or whitespace-only.
+- Board status must be Active or Archived.
+- Archived boards cannot be modified until restored.
+- Board ownership must be enforced by backend logic.
+
+
+## 5. Modeling Status
 
 - Conceptual entities: Defined
 - Relationships: Defined
