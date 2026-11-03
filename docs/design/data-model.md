@@ -58,10 +58,59 @@ Each Task belongs to exactly one Column.
 - Archived boards cannot be modified until restored.
 - Board ownership must be enforced by backend logic.
 
+### 4.2 User
 
-## 5. Modeling Status
+| Attribute | Role |
+|---|---|
+| id | Primary key |
+| name | Display name |
+| email | Required, unique |
+| passwordHash | Required, password verifier |
 
-- Conceptual entities: Defined
-- Relationships: Defined
-- Logical attributes and identifiers: Pending
+Constraints:
+- User email must be unique.
+- Plaintext passwords must not be stored.
+
+### 4.3 Column
+
+| Attribute | Role |
+|---|---|
+| id | Primary key |
+| boardId | Foreign key to Board |
+| name | Required |
+| position | Ordering within Board |
+
+Constraints:
+- Each Column belongs to exactly one Board.
+- A Column may contain zero or more Tasks.
+- A non-empty Column cannot be deleted.
+
+### 4.4 Task
+
+| Attribute | Role |
+|---|---|
+| id | Primary key |
+| columnId | Foreign key to Column |
+| title | Required |
+| position | Ordering within Column |
+
+Constraints:
+- Each Task belongs to exactly one Column.
+- Tasks can be moved and reordered.
+- Ordering must persist after saving.
+
+## 5. Logical Model Constraints
+
+- All entity identifiers must be unique.
+- Foreign-key references must point to valid records.
+- Archived Boards and their contents are read-only.
+- Column and Task ordering is scoped to the parent.
+- Cross-board task movement is excluded from V1
+  unless the requirements baseline is revised.
+
+## 6. Modeling Status
+
+- Conceptual model: Defined
+- Core logical entities and attributes: Drafted
+- Detailed integrity and ordering rules: Pending
 - Physical database schema: Pending
