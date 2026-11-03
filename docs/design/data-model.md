@@ -67,7 +67,14 @@ Each Task belongs to exactly one Column.
 | email | Required, unique |
 | passwordHash | Required, password verifier |
 
-Constraints:
+### Relationship
+
+- One User may own zero or more Boards.
+- Each Board must have exactly one User as owner.
+- Relationship: User.id → Board.ownerId (1:N).
+
+### Constraints:
+
 - User email must be unique.
 - Plaintext passwords must not be stored.
 
@@ -80,7 +87,13 @@ Constraints:
 | name | Required |
 | position | Ordering within Board |
 
-Constraints:
+### Relationship
+
+- Each Column belongs to exactly one Board.
+- One Board may contain zero or more Columns.
+- Relationship: Board.id → Column.boardId (1:N).
+
+### Constraints:
 - Each Column belongs to exactly one Board.
 - A Column may contain zero or more Tasks.
 - A non-empty Column cannot be deleted.
@@ -94,7 +107,13 @@ Constraints:
 | title | Required |
 | position | Ordering within Column |
 
-Constraints:
+### Relationship
+
+- Each Column belongs to exactly one Board.
+- One Board may contain zero or more Columns.
+- Relationship: Board.id → Column.boardId (1:N).
+
+### Constraints:
 - Each Task belongs to exactly one Column.
 - Tasks can be moved and reordered.
 - Ordering must persist after saving.
